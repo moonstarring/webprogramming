@@ -9,3 +9,7 @@
 #RewriteCond %{REQUEST_URI} !^/projects/
 #RewriteCond %{HTTP_HOST} ^(www\.)?(.*)\.([^\.]*)\.([^\.]*)$
 #RewriteRule (.*) %3/$1 [DPI] 
+
+RewriteEngine On
+RewriteRule ^admin/dashboard$ admin/dashboard.php
+RewriteRule ^admin/products$ admin/dashboard.php

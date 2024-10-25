@@ -425,6 +425,10 @@ div.dt-container div.dt-paging ul.pagination{
     background-color: var(--ct-table-bg)!important;
 }
 
+.page-item:not(.active) .page-link{
+    color: var(--brand-color);
+}
+
 @media screen and (min-width: 768px) {
     .sidebar{
         display: flex;

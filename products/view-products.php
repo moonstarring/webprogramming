@@ -6,7 +6,7 @@
             </div>
         </div>
     </div>
-
+    <div class="modal-container"></div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -29,7 +29,7 @@
                             <div class="d-flex align-items-center">
                                 <label for="category-filter" class="me-2">Category</label>
                                 <select id="category-filter" class="form-select">
-                                    <option value="">Choose...</option>
+                                    <option value="choose">Choose...</option>
                                     <option value="">All</option>
                                     <?php
                                         $categoryList = $productObj->fetchCategory();
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="page-title-right d-flex align-items-center"> 
-                            <a href="addproduct.php" class="btn btn-primary brand-bg-color">Add Product</a>
+                            <a id="add-product" href="#" class="btn btn-primary brand-bg-color">Add Product</a>
                         </div>
                     </div>
                     
@@ -51,13 +51,13 @@
                         <table id="table-products" class="table table-centered table-nowrap mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th>No.</th>
+                                    <th class="text-start">No.</th>
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Total Stocks</th>
-                                    <th>Available Stocks</th>
+                                    <th class="text-start">Price</th>
+                                    <th class="text-center">Total Stocks</th>
+                                    <th class="text-center">Available Stocks</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -70,28 +70,28 @@
                                     $available = $arr['stock_in'] - $arr['stock_out'];
                                 ?>
                                     <tr>
-                                        <td><?= $i ?></td>
+                                        <td class="text-start"><?= $i ?></td>
                                         <td><?= $arr['code'] ?></td>
                                         <td><?= $arr['name'] ?></td>
                                         <td><?= $arr['category_name'] ?></td>
                                         <td><?= number_format($arr['price'], 2) ?></td>
-                                        <td><?= $arr['stock_in'] ?></td>
-                                        <td>
+                                        <td class="text-center"><?= $arr['stock_in'] ?></td>
+                                        <td class="text-center">
                                             <span class="
                                                 <?php
                                                 if ($available < 1) {
-                                                    echo 'badge rounded-pill bg-danger';
+                                                    echo 'badge rounded-pill bg-danger px-3';
                                                 } elseif ($available <= 5) {
-                                                    echo 'badge rounded-pill bg-warning'; 
+                                                    echo 'badge rounded-pill bg-warning px-3'; 
                                                 }
                                                 ?>
                                             ">
                                                 <?= $available ?>
                                             </span>
                                         </td>
-                                        <td>
-                                            <a href="../stocks/stocks.php?id=<?= $arr['id'] ?>" class="btn btn-sm btn-outline-primary me-2">Stock In/Out</a>
-                                            <a href="../products/editproduct.php?id=<?= $arr['id'] ?>" class="btn btn-sm btn-outline-success me-2">Edit</a>
+                                        <td class="text-nowrap">
+                                            <a href="../stocks/stocks.php?id=<?= $arr['id'] ?>" class="btn btn-sm btn-outline-primary me-1">Stock In/Out</a>
+                                            <a href="../products/editproduct.php?id=<?= $arr['id'] ?>" class="btn btn-sm btn-outline-success me-1">Edit</a>
                                             <?php if (isset($_SESSION['account']['is_admin']) && $_SESSION['account']['is_admin']) { ?>
                                                 <button class="btn btn-sm btn-outline-danger deleteBtn" data-id="<?= $arr['id'] ?>" data-name="<?= htmlspecialchars($arr['name']) ?>">Delete</button>
                                             <?php } ?>
