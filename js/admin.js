@@ -18,11 +18,18 @@ $(document).ready(function(){
         viewProducts()
     })
 
+    $('#account-link').on('click', function(e){
+        e.preventDefault()
+        viewAccounts()
+    })
+
     let url = window.location.href;
     if (url.endsWith('dashboard')){
         $('#dashboard-link').trigger('click')
     }else if (url.endsWith('products')){
         $('#products-link').trigger('click')
+    }else if (url.endsWith('accounts')){
+        $('#account-link').trigger('click')
     }else{
         $('#dashboard-link').trigger('click')
     }
@@ -66,6 +73,34 @@ $(document).ready(function(){
             }
         }
         });
+    }
+
+    function viewAccounts() {
+        $.ajax({
+            type: 'GET',
+            url: '../account/account.php',
+            dataType: 'html',
+            success: function(response){
+                $('.content-page').html(response)
+
+                var table = $('#table-products').DataTable({
+                    dom: 'rtp',
+                    pageLength: 10,
+                    ordering: false,
+                });
+
+                // Bind custom input to DataTable search
+                $('#custom-search').on('keyup', function() {
+                    table.search(this.value).draw()
+                });
+
+                $('#category-filter').on('change', function() {
+                    if(this.value !== 'choose'){
+                        table.column(3).search(this.value).draw()
+                    }
+                });
+            }
+        })
     }
 
     function viewProducts(){
@@ -169,6 +204,28 @@ $(document).ready(function(){
     function fetchCategories(){
         $.ajax({
             url: '../products/fetch-categories.php', // URL to the PHP script that returns the categories
+            type: 'GET',
+            dataType: 'json', // Expect JSON response
+            success: function(data) {
+                // Clear the existing options (if any) and add a default "Select" option
+                $('#category').empty().append('<option value="">--Select--</option>');
+                
+                // Iterate through the data (categories) and append each one to the select dropdown
+                $.each(data, function(index, category) {
+                    $('#category').append(
+                        $('<option>', {
+                            value: category.id, // The value attribute
+                            text: cateogyr.name // The displayed text
+                        })
+                    );
+                });
+            }
+        });
+    }
+
+    function fetchAccounts(){
+        $.ajax({
+            url: '../account/view-account.php', // URL to the PHP script that returns the categories
             type: 'GET',
             dataType: 'json', // Expect JSON response
             success: function(data) {

@@ -81,6 +81,36 @@ class Account{
 
         return $data;
     }
+
+    function fetchUsers(){
+        $sql = "SELECT first_name, last_name, username, role FROM account ORDER BY last_name ASC;";
+
+        $query = $this->db->connect()->prepare($sql);
+
+        $data = null;
+
+        if($query->execute()){
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }
+
+        return false;
+    }
+
+    function fetchRole(){
+        $sql = "SELECT role from account;";
+
+        $query = $this->db->connect()->prepare($sql);
+
+        $data = null;
+
+        if($query->execute()){
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }
+
+        return false;
+    }
 }
 
 // $obj = new Account();
