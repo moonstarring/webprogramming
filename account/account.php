@@ -43,12 +43,12 @@
                             </div>
                         </div>
                         <div class="page-title-right d-flex align-items-center"> 
-                            <a id="add-product" href="#" class="btn btn-primary brand-bg-color">Add Account</a>
+                            <a id="add-account" href="add-account.php" class="btn btn-primary brand-bg-color">Add Account</a>
                         </div>
                     </div>
                     
                     <div class="table-responsive">
-                        <table id="table-products" class="table table-centered table-nowrap mb-0">
+                        <table id="table-account" class="table table-centered table-nowrap mb-0">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-start">No.</th>
