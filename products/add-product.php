@@ -36,15 +36,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     } else if ($price < 1){
         $priceErr = 'Price must be greater than 0.';
     }
+    
+    $maxFileSize = 5 * 1024 * 1024;
+
+    $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+    if(empty($image)){
+        $imageErr = "Product image is required.";
+    }else if(!in_array($imageFileType, $allowedType)){
+        $imageErr = "Accepted files are jpg, jpeg, and png only.";
+    }else if($_FILES['product_image']['size'] > $maxFileSize){
+        $imageErr = "Image file size must not exceed 5MB.";
+    }
 
     // If there are validation errors, return them as JSON
-    if(!empty($codeErr) || !empty($nameErr) || !empty($categoryErr) || !empty($priceErr)){
+    if(!empty($codeErr) || !empty($nameErr) || !empty($categoryErr) || !empty($priceErr) || !empty($imageErr)){
         echo json_encode([
             'status' => 'error',
             'codeErr' => $codeErr,
             'nameErr' => $nameErr,
             'categoryErr' => $categoryErr,
-            'priceErr' => $priceErr
+            'priceErr' => $priceErr,
+            'imageErr' => $imageErr
         ]);
         exit;
     }
